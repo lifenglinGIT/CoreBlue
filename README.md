@@ -1,6 +1,7 @@
 # CoreBlue简易使用方法
 
 
+
 /***初始化***/
 
     //这里需要填入自己服务
@@ -37,7 +38,7 @@
 
     BlueTools.shareIntance.stopScan()
     
-3 读取电量写入数据
+3 读取电量写入数据 (BlueWrite专一做写入操作可以根据自己的需求逐一添加方法去使用)
     
     guard let identifier = BlueTools.shareIntance.connectedPeripherals().keys.first else{return}
     BlueWrite.shareIntance.deviceInformation(type: 0x1804, identifier: identifier)
