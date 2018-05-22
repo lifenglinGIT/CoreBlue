@@ -48,6 +48,7 @@ class ViewController: UIViewController {
         configPlatformsBlueTool()
         
         
+        
         LFLLog(message: AppInfo.shareIntance.appName)
         LFLLog(message: AppInfo.shareIntance.version)
         LFLLog(message: UIDevice.current.isPad)

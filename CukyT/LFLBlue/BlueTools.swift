@@ -592,6 +592,10 @@ extension BlueTools{
         if !isOn{
             
             let alert = UIAlertController(title: "打开蓝牙来允许\"\(AppInfo.shareIntance.appName!)\"连接到配件", message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (action) in
+                if let url = URL(string: UIApplicationOpenSettingsURLString){UIApplication.shared.openURL(url)}
+            }))
+            
             alert.addAction(UIAlertAction(title: "取消", style: .default, handler: nil))
             UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
             
