@@ -37,8 +37,8 @@ class BlueTools : NSObject{
     
     //MARK:-  服务和特性UUID
     var serveceUUIDs : [CBUUID] = []
-    //MARK:-  需要检索的特性
-    var charaUUIDs : [String] = []
+//    //MARK:-  需要检索的特性
+//    var charaUUIDs : [String] = []
     
     //MARK:-  可见的所有设备
     var pers : [String : PeripheralModel] = [:]
@@ -88,9 +88,7 @@ extension BlueTools : CBPeripheralDelegate{
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         
-        guard let services = peripheral.services else {
-            return
-        }
+        guard let services = peripheral.services else {return}
         
         for service in services {
             peripheral.discoverCharacteristics(nil, for: service)
@@ -101,9 +99,7 @@ extension BlueTools : CBPeripheralDelegate{
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         
         
-        guard let characteris = service.characteristics else {
-            return
-        }
+        guard let characteris = service.characteristics else {return}
         
         
         var charas = characteristics[peripheral.identifier.uuidString]
@@ -148,14 +144,9 @@ extension BlueTools : CBPeripheralDelegate{
     
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         
-        guard let value = characteristic.value else {
-            return
-        }
+        guard let value = characteristic.value else {return}
         
-        
-        guard let peripher = pers[peripheral.identifier.uuidString] else {
-            return
-        }
+        guard let peripher = pers[peripheral.identifier.uuidString] else {return}
         
         let dataInfo = value as NSData
         
@@ -325,9 +316,7 @@ extension BlueTools{
     func updatePers(peripheral : CBPeripheral,status : PeripheralEventStatus) {
         
         let uuid = peripheral.identifier.uuidString
-        guard let model = pers[uuid] else {
-            return
-        }
+        guard let model = pers[uuid] else {return}
         model.peripheral = peripheral
         pers[uuid] = model
         
@@ -412,9 +401,9 @@ extension BlueTools{
     
     
     //需要在外部设置下  在初始化的时候无法设置代理成功 不知为毛
-    func configPlatforms(serveceUUIDs : [CBUUID] , charaUUIDs : [String]){
+    func configPlatforms(serveceUUIDs : [CBUUID]){
         self.serveceUUIDs = serveceUUIDs
-        self.charaUUIDs = charaUUIDs
+//        self.charaUUIDs = charaUUIDs
 //        manager = CBCentralManager(delegate: BlueTools.shareIntance, queue: .main)
         
         let options = [CBCentralManagerScanOptionAllowDuplicatesKey : true,
@@ -437,9 +426,7 @@ extension BlueTools{
     //连接一个外设
     func connectingADevice(uuid : String){
         
-        guard let model = pers[uuid] else {
-            return
-        }
+        guard let model = pers[uuid] else {return}
         
         let peripheral = model.peripheral!
         
@@ -456,9 +443,7 @@ extension BlueTools{
     //断开一个外设
     func cancelConnectionDevice(uuid : String) {
         
-        guard let model = pers[uuid] else {
-            return
-        }
+        guard let model = pers[uuid] else {return}
         
         let peripheral = model.peripheral!
         
@@ -495,25 +480,17 @@ extension BlueTools{
         
         if  identifier == nil {
             
-            guard let currentPeripheral = externalConnection.last?.identifier.uuidString else {
-                return
-            }
+            guard let currentPeripheral = externalConnection.last?.identifier.uuidString else {return}
             
             identifier = currentPeripheral
         }
         
         
-        guard let model = pers[identifier!] else {
-            return
-        }
+        guard let model = pers[identifier!] else {return}
         
-        guard let onePerCharcas = characteristics[identifier!] else {
-            return
-        }
+        guard let onePerCharcas = characteristics[identifier!] else {return}
         
-        guard let charca = onePerCharcas[uuid] else {
-            return
-        }
+        guard let charca = onePerCharcas[uuid] else {return}
         
         model.peripheral?.writeValue(data as Data, for: charca, type: .withResponse)
     }

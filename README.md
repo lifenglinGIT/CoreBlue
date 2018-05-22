@@ -4,11 +4,9 @@
 
 /***初始化***/
 
-    //这里需要填入自己服务
+    //这里需要填入自己需要使用的服务  ***** 1.为了指定服务扫描外设。2为了指定服务检索已连接的外设。                
     let serveces = [CBUUID(string: "填入自己服务")]
-    //这里需要填入服务之下的特征值
-    let charaUUIDs = ["特征值1","特征值2"]
-    BlueTools.shareIntance.configPlatforms(serveceUUIDs: serveces, charaUUIDs: charaUUIDs)
+    BlueTools.shareIntance.configPlatforms(serveceUUIDs: serveces)
 
     BlueTools.shareIntance.eventCallBack = {[weak self] (peripheral : CBPeripheral ,status : PeripheralEventStatus) ->() in
         //对设备信号值进行排序
@@ -52,6 +50,16 @@
     guard let peripheral = BlueTools.shareIntance.connectedPeripherals().values.first else{return}
     BlueTools.shareIntance.selectedPeripheral = peripheral.peripheral
     BlueTools.shareIntance.performDFU()
+    
+    
+/***写数据到外设使用 -BlueWrite***/
+    自行在BlueWrite中添加写入方法 如：
+    
+    func deviceInformation(type : Int , identifier : String){
+        let bytes : [UInt8] = [0x04,UInt8(type)]
+        let data = NSData(bytes: bytes, length: 2)
+        BlueTools.shareIntance.write(identifier: identifier, uuid: "使用的某个特性", data: data)
+    }
     
 
 

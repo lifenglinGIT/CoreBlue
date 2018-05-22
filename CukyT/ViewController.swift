@@ -176,10 +176,8 @@ extension ViewController{
         
         
         //这里需要填入自己服务
-        let serveces = [CBUUID(string: "填入自己服务")]
-        //这里需要填入服务之下的特征值
-        let charaUUIDs = ["特征值1","特征值2"]
-        BlueTools.shareIntance.configPlatforms(serveceUUIDs: serveces, charaUUIDs: charaUUIDs)
+        let serveces = [CBUUID(string: "1892")]
+        BlueTools.shareIntance.configPlatforms(serveceUUIDs: serveces)
         
         
         BlueTools.shareIntance.eventCallBack = {[weak self] (peripheral : CBPeripheral ,status : PeripheralEventStatus) ->() in

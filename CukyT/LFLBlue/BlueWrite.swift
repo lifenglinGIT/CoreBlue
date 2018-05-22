@@ -22,9 +22,9 @@ extension BlueWrite{
     //MARK:-  获取设备电量
     func deviceInformation(type : Int , identifier : String){
         
-        let bytes : [UInt8] = [0x80,0x01,0x04,UInt8(type)]
-        let data = NSData(bytes: bytes, length: 4)
-        BlueTools.shareIntance.write(identifier: identifier, uuid: "6E402A92-B5A3-F393-E0A9-E50E24DCCA9E", data: data)
+        let bytes : [UInt8] = [0x04,UInt8(type)]
+        let data = NSData(bytes: bytes, length: 2)
+        BlueTools.shareIntance.write(identifier: identifier, uuid: "2A92", data: data)
     }
     
 }
